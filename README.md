@@ -90,3 +90,5 @@ http://127.0.0.1:8000/api
 Podés ver y probar todos los endpoints desde la colección de Postman:
 
 👉 [Documentación completa Postman](https://documenter.getpostman.com/view/44085084/2sB2cbZdXS)
+
+Ademas se encuentra un archivo Daptee-test.postman_collection.json, para poder importarlo en Postman
