@@ -16,7 +16,7 @@ class AuthController extends Controller
             ]);
 
             if ($request->username === 'Daptee' && $request->password === 'Daptee2025') {
-                $token = bin2hex(random_bytes(32));
+                $token = '1234567890';
                 return response()->json(['token' => $token]);
             }
 
