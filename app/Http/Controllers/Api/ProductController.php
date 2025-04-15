@@ -35,7 +35,6 @@ class ProductController extends Controller
         }
     }
 
-
     public function store(Request $request)
     {
         try {
@@ -67,7 +66,6 @@ class ProductController extends Controller
         }
     }
 
-
     public function show(string $id)
     {
         try {
@@ -87,7 +85,6 @@ class ProductController extends Controller
             ], 500);
         }
     }
-
 
     public function update(Request $request, string $id)
     {
@@ -208,6 +205,42 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener el producto con el precio más alto',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function mostUsedTags(Request $request)
+    {
+        try {
+            $products = Product::all();
+
+            $tagsCount = [];
+            $tagsProducts = [];
+
+            foreach ($products as $product) {
+                if (isset($product->tags) && is_array($product->tags)) {
+                    foreach ($product->tags as $tag) {
+                        if (isset($tagsCount[$tag])) {
+                            $tagsCount[$tag]++;
+                        } else {
+                            $tagsCount[$tag] = 1;
+                        }
+                        $tagsProducts[$tag][] = $product;
+                    }
+                }
+            }
+
+            $mostUsedTag = array_keys($tagsCount, max($tagsCount))[0];
+
+            return response()->json([
+                'tag' => $mostUsedTag,
+                'count' => $tagsCount[$mostUsedTag],
+                'products' => $tagsProducts[$mostUsedTag],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al obtener las etiquetas más usadas',
                 'error' => $e->getMessage()
             ], 500);
         }
