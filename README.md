@@ -42,6 +42,13 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
+Descomentar las siguientes lineas:
+
+```bash
+DB_HOST=127.0.0.1
+DB_PORT=3306
+```
+
 ### 4. Habilitar PDO en PHP
 
 En el archivo php.ini, descomentá la siguiente línea (quitando el ;):
