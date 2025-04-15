@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Middleware\AuthMiddleware;
+use App\Http\Controllers\Api\ProductController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +9,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth.token')->group(function () {
-    Route::get('/products', function () {
-        return 'Los productos';
-    });
+    Route::apiResource('products', ProductController::class);
 });
