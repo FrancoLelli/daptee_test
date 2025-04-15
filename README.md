@@ -38,7 +38,7 @@ Editá el archivo .env con tus credenciales de base de datos:
 
 ```bash
 DB_DATABASE=daptee_test
-DB_USERNAME=
+DB_USERNAME=root
 DB_PASSWORD=
 ```
 
