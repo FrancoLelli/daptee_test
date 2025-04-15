@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "bc1c52db-2cbb-4cdc-b82e-d7e20ec2b0f2",
+		"name": "Daptee-test",
+		"description": "Documentacion API - Daptee Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44085084"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Daptee\",\r\n    \"password\": \"Daptee2025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "### Descripcion\n\nEste endpoint permite obtener un token de autenticación mediante el envío de las credenciales del usuario. Es necesario para acceder a los endpoints protegidos.\n\n**Cuerpo de la solicitud** (JSON):\n\n``` json\njsonCopiarEditar{\n  \"email\": \"usuario@example.com\",\n  \"password\": \"contraseña_segura\"\n}\n\n ```\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"token\": \"token_generado_aqui\"\n}\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Contiene las rutas de autenticacion"
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products?search=apple&per_page=1&page=2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "apple"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						},
+						"description": "**Descripción**:\n\nEste endpoint devuelve una lista de todos los productos registrados en el sistema.\n\n**Autenticación**: Requiere un token de autenticación.\n\n**Encabezados**:\n\n``` json\nhttpCopiarEditarAuthorization: Bearer <tu_token_aqui>\n\n ```\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar[\n  {\n    \"id\": 1,\n    \"name\": \"Monitor\",\n    \"price\": 150,\n    \"tags\": [\"oferta\", \"pantalla\"]\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Teclado\",\n    \"price\": 50,\n    \"tags\": [\"mecánico\", \"gaming\"]\n  }\n]\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/:id",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						},
+						"description": "**Descripción**:  \n  \nDevuelve los datos del producto correspondiente al `id` especificado.\n\n**Parámetros**:\n\n- `id`: ID del producto (en la URL).\n    \n\n**Ejemplo de solicitud**:  \n`GET /api/products/2`\n\n**Encabezados**:\n\n``` json\nhttpCopiarEditarAuthorization: Bearer <tu_token>\n\n ```\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"id\": 2,\n  \"name\": \"Teclado\",\n  \"price\": 50,\n  \"tags\": [\"oferta\", \"mecánico\"]\n}\n\n\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Producto prueba\",\r\n    \"price\": 1644,\r\n    \"tags\": [\"Prueba\", \"Franco\", \"Prueba\", null]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							]
+						},
+						"description": "**Descripción**:  \n  \nEste endpoint permite crear un nuevo producto. Se debe enviar un objeto JSON con los datos del producto. Los tags serán limpiados de cualquier valor no válido (undefined, null, false, 0).\n\n**Cuerpo de la solicitud** (JSON):\n\n``` json\njsonCopiarEditar{\n  \"name\": \"Monitor\",\n  \"price\": 150,\n  \"tags\": [\"oferta\", null, \"pantalla\", false, 0, \"gaming\", \"undefined\"]\n}\n\n ```\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"id\": 3,\n  \"name\": \"Monitor\",\n  \"price\": 150,\n  \"tags\": [\"oferta\", \"pantalla\", \"gaming\"]\n}\n\n\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Notebook Samsung 20\",\r\n    \"price\": 1644,\r\n    \"tags\": [\"notebook\",\r\n            \"oferta\",\r\n            \"tecnologia\",\r\n            \"samsung\",\r\n            null,\r\n            \"undefined\"\r\n            ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/:id",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "**Descripción**:  \n  \nActualiza un producto existente. El campo `tags` también será limpiado (se eliminarán valores como `null`, `false`, `0`, `\"undefined\"`).\n\n**Encabezados**:\n\n``` json\nhttpCopiarEditarAuthorization: Bearer <tu_token>\nContent-Type: application/json\n\n ```\n\n**Cuerpo de la solicitud**:\n\n``` json\njsonCopiarEditar{\n  \"name\": \"Teclado mecánico RGB\",\n  \"price\": 70,\n  \"tags\": [\"gaming\", 0, false, \"RGB\"]\n}\n\n ```\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"id\": 2,\n  \"name\": \"Teclado mecánico RGB\",\n  \"price\": 70,\n  \"tags\": [\"gaming\", \"RGB\"]\n}\n\n\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/:id",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "**Descripción**:  \n  \nElimina un producto específico por su ID.\n\n**Encabezados**:\n\n``` json\nhttpCopiarEditarAuthorization: Bearer <tu_token>\n\n ```\n\n**Ejemplo de solicitud**:  \n`DELETE /api/products/3`\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"message\": \"Producto eliminado correctamente\"\n}\n\n\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Contiene las rutas relacionadas a CRUD productos"
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Get Total Stock Value",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/:id/total-stock-value?quantity=2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								":id",
+								"total-stock-value"
+							],
+							"query": [
+								{
+									"key": "quantity",
+									"value": "2"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						},
+						"description": "**Descripción**:  \n  \nEste endpoint devuelve el valor total de un producto basado en su precio y la cantidad proporcionada en el parámetro `quantity`.\n\n**Parámetros de consulta**:\n\n- **quantity**: La cantidad de productos.\n    \n\n**Ejemplo de solicitud**:  \n`GET /api/products/1/total-stock-value?quantity=10`\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"productId\": 1,\n  \"price\": 150,\n  \"quantity\": 10,\n  \"totalValue\": 1500\n}\n\n\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Highest Price Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/highest-price",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"highest-price"
+							]
+						},
+						"description": "**Descripción**:\n\nEste endpoint devuelve el producto o productos con el precio más alto entre todos los registrados en el sistema.\n\n**Respuesta de ejemplo**:\n\n```\njsonCopiarEditar[\n  {\n    \"id\": 5,\n    \"name\": \"Laptop\",\n    \"price\": 1000,\n    \"tags\": [\"gaming\", \"high-end\"]\n  }\n]\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Most Used Tag",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer 1234567890",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/tags/most-used",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"tags",
+								"most-used"
+							]
+						},
+						"description": "**Descripción**:  \n  \nEste endpoint devuelve el tag más utilizado en todos los productos, junto con la cantidad de veces que se utilizó y los productos que contienen dicho tag.\n\n**Respuesta de ejemplo**:\n\n``` json\njsonCopiarEditar{\n  \"tag\": \"oferta\",\n  \"count\": 4,\n  \"products\": [\n    {\n      \"id\": 1,\n      \"name\": \"Monitor\",\n      \"tags\": [\"oferta\", \"pantalla\"]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Teclado\",\n      \"tags\": [\"oferta\", \"mecánico\"]\n    }\n  ]\n}\n\n\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Contiene las rutas relacionadas a los reportes"
+		}
+	]
+}
