@@ -44,13 +44,7 @@ class ProductController extends Controller
                 'tags' => 'array',
             ]);
 
-            if (isset($data['tags']) && is_array($data['tags'])) {
-                $data['tags'] = array_filter($data['tags'], function ($tag) {
-                    return !is_null($tag) && $tag !== false && $tag !== 0 && $tag !== 'undefined';
-                });
-
-                $data['tags'] = array_values($data['tags']);
-            }
+            $data['tags'] = Helpers::validateTags($data['tags']);
 
             $product = Product::create($data);
 
@@ -95,13 +89,7 @@ class ProductController extends Controller
                 'tags' => 'array',
             ]);
 
-            if (isset($data['tags']) && is_array($data['tags'])) {
-                $data['tags'] = array_filter($data['tags'], function ($tag) {
-                    return !is_null($tag) && $tag !== false && $tag !== 0 && $tag !== 'undefined';
-                });
-
-                $data['tags'] = array_values($data['tags']);
-            }
+            $data['tags'] = Helpers::validateTags($data['tags']);
 
             $product = Product::find($id);
 
@@ -187,19 +175,7 @@ class ProductController extends Controller
     public function highestPrice(Request $request)
     {
         try {
-            $products = Product::all();
-
-            $maxPrice = null;
-            $highestPriceProduct = [];
-
-            foreach ($products as $product) {
-                if ($maxPrice === null || $product->price > $maxPrice) {
-                    $maxPrice = $product->price;
-                    $highestPriceProduct = [$product];
-                } elseif ($product->price == $maxPrice) {
-                    $highestPriceProduct[] = $product;
-                }
-            }
+            $highestPriceProduct = Product::getProductsWithHighestPrice();
 
             return response()->json($highestPriceProduct);
         } catch (\Exception $e) {
@@ -213,31 +189,15 @@ class ProductController extends Controller
     public function mostUsedTags(Request $request)
     {
         try {
-            $products = Product::all();
+            $mostUsedTagsProducts = Product::getMostUsedTagsWithProducts();
 
-            $tagsCount = [];
-            $tagsProducts = [];
-
-            foreach ($products as $product) {
-                if (isset($product->tags) && is_array($product->tags)) {
-                    foreach ($product->tags as $tag) {
-                        if (isset($tagsCount[$tag])) {
-                            $tagsCount[$tag]++;
-                        } else {
-                            $tagsCount[$tag] = 1;
-                        }
-                        $tagsProducts[$tag][] = $product;
-                    }
-                }
+            if (!$mostUsedTagsProducts) {
+                return response()->json([
+                    'message' => 'No se encontraron tags'
+                ], 404);
             }
 
-            $mostUsedTag = array_keys($tagsCount, max($tagsCount))[0];
-
-            return response()->json([
-                'tag' => $mostUsedTag,
-                'count' => $tagsCount[$mostUsedTag],
-                'products' => $tagsProducts[$mostUsedTag],
-            ]);
+            return response()->json($mostUsedTagsProducts);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener las etiquetas más usadas',

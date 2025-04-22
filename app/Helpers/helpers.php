@@ -17,4 +17,15 @@ class Helpers
 
     return $result;
   }
+
+  public static function validateTags($tags)
+  {
+    if (is_array($tags)) {
+      return array_filter($tags, function ($tag) {
+        return !is_null($tag) && $tag !== false && $tag !== 0 && $tag !== 'undefined';
+      });
+    }
+
+    return array_values($tags);
+  }
 }
